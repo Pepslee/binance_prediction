@@ -1,20 +1,14 @@
-from datetime import datetime, date
+from datetime import date
 from tqdm import tqdm
 
 import numpy as np
 import pandas as pd
 
-from data_generator import DataGenerator
-from feature_engineering import feature_engineering
-from pre_processing import load_pre_processing, resample
+from binance_prediction.data_generator import DataGenerator
+from binance_prediction.feature_engineering import feature_engineering
+from binance_prediction.pre_processing import load_pre_processing, resample
 
-
-import matplotlib.pyplot as plt
 from catboost import CatBoostClassifier
-from sklearn.metrics import confusion_matrix
-
-
-
 
 path = '/home/serg/DataspellProjects/binance/BTCUSDT_2017-08-17_2021-05-21.csv'
 
@@ -99,8 +93,6 @@ for p, y in zip(pred, y_test):
     if y == 1 or p[0] == 1:
         print(y, p[0])
 
-
-from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import precision_score, recall_score
 
 

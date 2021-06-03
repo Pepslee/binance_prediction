@@ -1,20 +1,19 @@
-from datetime import datetime, date
-from tqdm import tqdm
+#!/usr/bin/env python
+
+
+from datetime import date
 
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-import tensorflow_addons as tfa
 
-from callbacks import Metrics
-from data_generator import DataGenerator
-from feature_engineering import feature_engineering
-from loss import WeightedCategoricalCrossEntropy
-from pre_processing import load_pre_processing, resample
+from binance_prediction.data_generator import DataGenerator
+from binance_prediction.feature_engineering import feature_engineering
+from binance_prediction.pre_processing import load_pre_processing, resample
 
 regularizer = tf.keras.regularizers.l2(0.01)
 
-path = '../BTCUSDT_2017-08-17_2021-05-21.csv'
+path = '../../BTCUSDT_2017-08-17_2021-05-21.csv'
 
 df = pd.read_csv(path)
 df = load_pre_processing(df)

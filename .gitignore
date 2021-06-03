@@ -8,3 +8,5 @@ database/
 build/
 dist/
 tmp*
+*.lock
+Pipfile*
