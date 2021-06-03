@@ -1,0 +1,10 @@
+*.pyc
+.idea/
+*~
+database/
+.venv*
+*.egg-info/
+.eggs/
+build/
+dist/
+tmp*
