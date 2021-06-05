@@ -2,7 +2,7 @@
 
 
 from datetime import date
-
+import os
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -13,9 +13,12 @@ from binance_prediction.data_generator import train_test_split, TrainDataGenerat
 from binance_prediction.feature_engineering import feature_engineering
 from binance_prediction.pre_processing import load_pre_processing, resample
 
+print(tf.__version__)
+
 regularizer = tf.keras.regularizers.l2(0.01)
 
-path = '../BTCUSDT_2017-08-17_2021-05-21.csv'
+project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.join(project_dir, 'BTCUSDT_2017-08-17_2021-05-21.csv')
 
 df = pd.read_csv(path)
 df = load_pre_processing(df)

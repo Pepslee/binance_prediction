@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+tensorflow = "==2.5.0"
+tensorflow-addons = "==0.13.0"
+pandas = "==1.2.4"
+catboost = "==0.26"
+scikit-learn = "==0.24.2"
+scipy = "==1.6.3"
+numpy = "==1.19.5"
+tqdm = "==4.61.0"
+binance-prediction = {editable = true, path = "."}
+
+[dev-packages]
+binance-prediction = {editable = true, path = "."}
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
