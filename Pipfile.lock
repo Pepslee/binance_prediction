@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3377abdda3c7752e7e7ce0c591d13b41cf2a31ebb402aeb45c33b48780e632a3"
+            "sha256": "17cfbcff5c54bb94d0d01d269cbe8d65703d6ba98b717b58313908b2ebf33ba6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -305,6 +305,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==3.4.2"
         },
+        "mplfinance": {
+            "hashes": [
+                "sha256:0331fb99ca10fe59e8870c477603ef21365f8975f0d7288701a32c02d010db24",
+                "sha256:9a0aadf5c027ccf87a061ee3e76a21cda6a1c5203ba82e58839879167da9e488"
+            ],
+            "index": "pypi",
+            "version": "==0.12.7a17"
+        },
         "numpy": {
             "hashes": [
                 "sha256:012426a41bc9ab63bb158635aecccc7610e3eff5d31d1eb43bc099debc979d94",
@@ -425,11 +433,11 @@
         },
         "plotly": {
             "hashes": [
-                "sha256:1a1f77a43bfa067e8c8eb3eaafd0d78bbca073744faec77cf9d0c08ba3fa51f6",
-                "sha256:f04fa6bc62530a811f29461e98e9b6e57245b475bd34372630fd7f610a1ed761"
+                "sha256:c12c94b592996a4d4de27488b970a66cf2d052ee3e9c586e6d4a55e456a6c500",
+                "sha256:e131caa315a23b28ec858eff0e5632595c0c7a8777a2289ec853bd0f53e38f83"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==5.0.0rc1"
+            "version": "==5.0.0rc2"
         },
         "protobuf": {
             "hashes": [

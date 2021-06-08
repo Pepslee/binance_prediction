@@ -10,8 +10,8 @@ def load_pre_processing(df):
     del df['ignore']
     df = df.rename(columns={'volume': 'volume_btc', 'number_of_trades': 'trades', 'quote_asset_volume': 'volume_usdt',
                             'taker_buy_base_asset_volume': 'taker_volume_btc',
-                            'taker_buy_quote_asset_volume': 'taker_volume_usdt'})
-    df = df.set_index('open_time')
+                            'taker_buy_quote_asset_volume': 'taker_volume_usdt', 'open_time': 'date'})
+    df = df.set_index('date')
     return df
 
 
