@@ -8,10 +8,15 @@ from random import shuffle
 def split_candles_dataset(df, window_size: int, test_percentage: int = 10, method: str = 'random'):
     if 0 > test_percentage > 100:
         raise ValueError(f'The percentage is either more than 100 or less than 0: {test_percentage}')
+    new_df = df.copy()
+    timestamps = df.index.tolist()
+    new_df.index = range(len(new_df))
+
     # Randomly sample {test_percentage}% of your dataframe
-    test_indexes = df[:-window_size].sample(frac=test_percentage / 100, axis='index').index.tolist()
-    train_indexes = df[~df.index.isin(test_indexes)][:-window_size].index.tolist()
-    return train_indexes, test_indexes
+    test_indexes = new_df[:-window_size].sample(frac=test_percentage / 100, axis='index').index.tolist()
+    train_indexes = new_df[~new_df.index.isin(test_indexes)][:-window_size].index.tolist()
+
+    return train_indexes, test_indexes, new_df, timestamps
 
 
 def train_test_split(df):
@@ -26,10 +31,11 @@ def train_test_split(df):
 
 
 class DataGenerator:
-    def __init__(self, df, indices, batch_size=10, is_shuffle=True):
+    def __init__(self, df, indices, win, batch_size=10, is_shuffle=True):
         self.indices = indices
         self.batch_size = batch_size
         self.df = df
+        self.win = win
 
         if is_shuffle:
             shuffle(self.indices)
@@ -38,13 +44,19 @@ class DataGenerator:
         return int(len(self.indices) / self.batch_size)
 
     def __iter__(self):
+        while True:
+            yield self.__next__()
+
+    def __next__(self):
         for i, index in enumerate(self.indices[::self.batch_size]):
             # so as not to go beyond the list of indices in the second loop
             if i * self.batch_size + self.batch_size > len(self.indices):
                 break
-            batch = [self.df.loc[self.indices[i + r]] for r in range(self.batch_size)]
-            yield batch
-
+            batch = [self.df.loc[range(self.indices[i + r], self.indices[i + r] + self.win)] for r in range(self.batch_size)]
+            batch_x = [b[0:7] for b in batch]
+            batch_y = [b[7:] for b in batch]
+            return np.array(batch_x).astype(np.float32), np.array(batch_y).astype(np.float32)
+        shuffle(self.indices)
 
 
 class TrainDataGenerator:
