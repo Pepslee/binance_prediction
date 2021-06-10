@@ -8,3 +8,4 @@ database/
 build/
 dist/
 tmp*
+*.csv

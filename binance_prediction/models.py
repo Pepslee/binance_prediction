@@ -2,9 +2,14 @@ def build_model(shape, loss_fn):
     import tensorflow as tf
     print(tf.__version__)
     regularizer = tf.keras.regularizers.l2(0.01)
+    conv1 = tf.keras.layers.Conv1D(16, 3, strides=1, kernel_regularizer=regularizer, activation='relu')
+    print(shape)
+    print(conv1)
     model = tf.keras.models.Sequential([
         tf.keras.layers.InputLayer(input_shape=shape),
-        tf.keras.layers.Conv1D(5, 3, strides=1, kernel_regularizer=regularizer, activation='relu'),
+        conv1,
+        tf.keras.layers.Flatten(),
+        tf.keras.layers.Dense(5, activation='tanh')
         # tf.keras.layers.BatchNormalization(),
         # tf.keras.layers.Dropout(0.2),
         # tf.keras.layers.Conv2D(4, (5, 3), strides=(1, 1), kernel_regularizer=regularizer, activation='relu'),
@@ -17,9 +22,9 @@ def build_model(shape, loss_fn):
         # tf.keras.layers.BatchNormalization(),
         # tf.keras.layers.Dropout(0.5),
         # tf.keras.layers.Flatten(),
-        # tf.keras.layers.Dense(1, activation='sigmoid')
+        # tf.keras.layers.Dense(32, activation='sigmoid')
     ])
-    model.compile(loss=tf.keras.losses.MeanSquaredError(), optimizer='adam', metrics=['accuracy'])
+    model.compile(loss=tf.keras.losses.MeanSquaredError(), optimizer=tf.keras.optimizers.Adam(0.01), metrics=tf.keras.metrics.MeanAbsoluteError())
     # model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
     #               loss=loss_fn,
     #               metrics=[tf.keras.metrics.Recall(thresholds=0.2, name='recall_0.2'),

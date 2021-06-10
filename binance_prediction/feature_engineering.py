@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def feature_engineering(df):
     # GENERATE FEATURES
     new_df = pd.DataFrame()
-    new_df['momentum'] = np.where(df['open'] <= df['close'], (df['open'] / df['high'] - 1) * 100, (df['open'] / df['low'] - 1) * 100)
+    new_df['momentum'] = np.where(df['open'] <= df['close'], (df['high'] / df['open'] - 1), (df['low'] / df['open'] - 1))
     # df['price/volume'] = (df['high'] - df['low']) / (df['volume_btc'] + 0.0001)
     # df['price/trades'] = (df['high'] - df['low']) / (df['trades'] + 0.0001)
     # df['body/shadows'] = (df['close'] - df['open']).abs() / (df['high'] - df['low'] + 0.0001).abs()

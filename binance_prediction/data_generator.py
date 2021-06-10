@@ -36,6 +36,7 @@ class DataGenerator:
         self.batch_size = batch_size
         self.df = df
         self.win = win
+        self.position = 0
 
         if is_shuffle:
             shuffle(self.indices)
@@ -43,20 +44,22 @@ class DataGenerator:
     def __len__(self):
         return int(len(self.indices) / self.batch_size)
 
+    def __next__(self):
+        # so as not to go beyond the list of indices in the second loop
+        if self.position + self.batch_size > len(self.indices):
+            self.position = 0
+            shuffle(self.indices)
+        batch = [self.df.loc[range(self.indices[self.position + r], self.indices[self.position + r] + self.win)]
+                 for r in range(self.batch_size)]
+        batch_x = [b[0:7] for b in batch]
+        batch_y = [b[7:] for b in batch]
+        self.position += self.batch_size
+        return np.array(batch_x).astype(np.float32), np.array(batch_y).astype(np.float32)
+
     def __iter__(self):
         while True:
             yield self.__next__()
 
-    def __next__(self):
-        for i, index in enumerate(self.indices[::self.batch_size]):
-            # so as not to go beyond the list of indices in the second loop
-            if i * self.batch_size + self.batch_size > len(self.indices):
-                break
-            batch = [self.df.loc[range(self.indices[i + r], self.indices[i + r] + self.win)] for r in range(self.batch_size)]
-            batch_x = [b[0:7] for b in batch]
-            batch_y = [b[7:] for b in batch]
-            return np.array(batch_x).astype(np.float32), np.array(batch_y).astype(np.float32)
-        shuffle(self.indices)
 
 
 class TrainDataGenerator:
