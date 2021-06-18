@@ -31,15 +31,14 @@ def train_test_split(df):
 
 
 class DataGenerator:
-    def __init__(self, df, indices, win, batch_size=10, is_shuffle=True):
+    def __init__(self, df, indices: list, win, batch_size=10, shuffle=True):
         self.indices = indices
         self.batch_size = batch_size
         self.df = df
         self.win = win
         self.position = 0
-
-        if is_shuffle:
-            shuffle(self.indices)
+        self.shuffle = shuffle
+        self.on_epoch_end()
 
     def __len__(self):
         return int(len(self.indices) / self.batch_size)
@@ -60,6 +59,9 @@ class DataGenerator:
         while True:
             yield self.__next__()
 
+    def on_epoch_end(self):
+        if self.shuffle:
+            shuffle(self.indices)
 
 
 class TrainDataGenerator:
